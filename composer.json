@@ -1,0 +1,15 @@
+{
+  "name": "iperstudio/impersonate-plugin",
+  "description": "Admin-only, request-scoped account impersonation for Kirby websites.",
+  "type": "kirby-plugin",
+  "license": "MIT",
+  "version": "0.1.0",
+  "authors": [{ "name": "Iperstudio", "email": "ciao@iperstudio.net", "homepage": "https://iperstudio.net/" }],
+  "require": { "php": ">=8.2", "getkirby/composer-installer": "^1.1" },
+  "conflict": { "getkirby/cms": "<5.0.0 || >=6.0.0-dev" },
+  "require-dev": { "getkirby/cms": "^5.0" },
+  "keywords": ["kirby", "kirby-plugin", "impersonate", "preview"],
+  "scripts": { "test": "@php tests/run.php", "test-js": "node --test tests/browser.test.cjs" },
+  "config": { "allow-plugins": { "getkirby/composer-installer": true } },
+  "extra": { "kirby": { "compatible": "^5.0" } }
+}

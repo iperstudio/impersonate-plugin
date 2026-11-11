@@ -1,0 +1,64 @@
+/* Low-specificity defaults. Override these properties or any data selector. */
+:where([data-impersonate-toolbar]) {
+  --impersonate-gap: 0.75rem;
+  --impersonate-border: #888;
+  --impersonate-button-bg: #1f2937;
+  --impersonate-button-color: #fff;
+  --impersonate-radius: 0.375rem;
+  margin-block: 1rem;
+  color: inherit;
+  font: inherit;
+}
+:where([data-impersonate-controls], [data-impersonate-active]) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--impersonate-gap);
+}
+:where([data-impersonate-label], [data-impersonate-submit], [data-impersonate-exit]) {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+:where([data-impersonate-input]) {
+  box-sizing: border-box;
+  flex: 0 1 20rem;
+  min-width: 0;
+  max-width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--impersonate-border);
+  border-radius: var(--impersonate-radius);
+  color: inherit;
+  background: transparent;
+  font: inherit;
+  line-height: 1.5;
+}
+:where([data-impersonate-submit], [data-impersonate-exit]) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--impersonate-button-bg);
+  border-radius: var(--impersonate-radius);
+  color: var(--impersonate-button-color);
+  background: var(--impersonate-button-bg);
+  font: inherit;
+  line-height: 1.5;
+  text-decoration: none;
+  cursor: pointer;
+}
+:where([data-impersonate-input], [data-impersonate-submit], [data-impersonate-exit]):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+:where([data-impersonate-identity]) {
+  margin: 0;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 1200px) {
+  :where([data-impersonate-notice]) { display: none; }
+}
+@media print {
+  :where([data-impersonate-toolbar]) { display: none; }
+}
