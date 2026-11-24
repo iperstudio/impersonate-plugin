@@ -30,17 +30,25 @@ Use one installed copy of the plugin per project and follow the setup below afte
 
 ### 1. Wrap the site's render call
 
-In the front controller (`index.php`, or `public/index.php` in a public-folder setup), keep your Kirby bootstrap and application construction. Replace the final render call:
+In the front controller (`index.php`, or `public/index.php` in a public-folder setup), load the Kirby bootstrap and create the Kirby instance before calling the plugin. If your `index.php` currently ends with `echo (new Kirby)->render();`, change it to:
 
 ```php
-// Before:
-echo $kirby->render();
+<?php
 
-// After:
+use Kirby\Cms\App;
+
+require 'kirby/bootstrap.php';
+
+$kirby = new App();
+
 echo \Iperstudio\Impersonate\Impersonate::render($kirby);
 ```
 
-Kirby loads the plugin when the application is constructed. The wrapper delegates to Kirby's normal renderer and router; it does not replace your routes with a page-only resolver. Requests without `as` use the normal renderer unchanged.
+Keep the bootstrap path from your project. If your front controller already creates `$kirby`, keep its constructor options and other setup, and replace `echo $kirby->render();` with the last line above.
+
+Kirby discovers the plugin when `new App()` runs. The explicit `Kirby\Cms\App` import lets static analyzers such as Intelephense resolve the class. If you see `Class "Iperstudio\Impersonate\Impersonate" not found`, check that the constructor runs before the wrapper and that `impersonate-plugin/index.php` exists in Kirby's plugins directory (`site/plugins` by default).
+
+The wrapper uses Kirby's normal renderer and router. Requests without `as` use the normal renderer unchanged.
 
 ### 2. Include the resources
 
@@ -60,7 +68,7 @@ Put this snippet once inside `<body>`, wherever the account controls should appe
 <?php snippet('impersonate/toolbar') ?>
 ```
 
-It renders nothing for non-admin visitors. Outside impersonation it shows an account input and an **Open preview** button. During impersonation it shows the selected email, role and a **Back to admin view** link. It remains visible even when the target has no admin privileges.
+To see the toolbar, sign in to the Kirby Panel as a user with the `admin` role, then open the website on the same origin in the same browser profile. Outside impersonation it shows an account input and an **Open preview** button. During impersonation it shows the selected email, role and a **Back to admin view** link. It remains visible even when the target has no admin privileges.
 
 The plugin does not add a Panel section or automatically inject markup into your layout.
 
@@ -166,7 +174,7 @@ The UI contains **no CSS classes**. The default stylesheet uses low-specificity 
 | `data-impersonate-notice` | Optional read-only explanation. |
 | `data-impersonate-exit` | Return to admin link; also exempts it from URL rewriting. |
 
-Defaults use an unboxed, wrapping flex layout. The input is about 20rem wide, and buttons keep their text on one line. The read-only explanation is hidden at widths of 1200px or less. The toolbar is hidden when printing.
+Defaults use an unboxed, wrapping flex layout with a 1rem margin on each side. The input is about 20rem wide. The buttons have a black background and keep their text on one line. The read-only explanation is hidden at widths of 1200px or less. The toolbar is hidden when printing.
 
 Example overrides:
 

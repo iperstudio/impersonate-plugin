@@ -22,7 +22,7 @@ $hidden = static function (array $values, string $prefix = '') use (&$hidden): v
   <?php if ($target) : ?>
     <div data-impersonate-active>
       <p data-impersonate-identity>
-        <strong><?= esc(t('impersonate.active', 'Preview as')) ?> <?= esc($target->email()) ?></strong>
+        <?= esc(t('impersonate.active', 'Preview as')) ?> <?= esc($target->email()) ?>
         (<?= esc($target->role()->title()) ?>).
         <?php if ($app->option(Impersonate::OPTION . 'readOnly', false)) : ?>
           <span data-impersonate-notice><?= esc(t('impersonate.read-only', 'Read-only preview, changes and submissions are disabled.')) ?></span>
