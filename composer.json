@@ -3,7 +3,6 @@
   "description": "Admin-only, request-scoped account impersonation for Kirby websites.",
   "type": "kirby-plugin",
   "license": "MIT",
-  "version": "0.1.0",
   "authors": [{ "name": "Iperstudio", "email": "ciao@iperstudio.net", "homepage": "https://iperstudio.net/" }],
   "require": { "php": ">=8.2", "getkirby/composer-installer": "^1.1" },
   "conflict": { "getkirby/cms": "<5.0.0 || >=6.0.0-dev" },

@@ -8,33 +8,21 @@ Requires **Kirby 5 and PHP 8.2+**. Tested with Kirby 5.4.4. No frontend dependen
 
 ## Installation
 
-### Manual installation
+### Composer (Packagist)
 
-Copy this directory to `site/plugins/impersonate-plugin` in your Kirby project.
-
-### Local Composer installation
-
-This is a local package; it has not been published to Packagist. Add a path repository to the consuming project's `composer.json`:
-
-```json
-{
-  "repositories": [
-    {
-      "type": "path",
-      "url": "../impersonate-plugin",
-      "options": { "symlink": true }
-    }
-  ]
-}
-```
-
-Then run from that project's root:
+From your Kirby project's root, run:
 
 ```sh
-composer require "iperstudio/impersonate-plugin:^0.1"
+composer require iperstudio/impersonate-plugin
 ```
 
-Allow `getkirby/composer-installer` when Composer requests permission. Use one installed copy of the plugin per project.
+Allow `getkirby/composer-installer` if Composer prompts you. The installer places the plugin in `site/plugins/impersonate-plugin` by default.
+
+### Manual installation
+
+Download and extract a tagged release, then place the extracted directory at `site/plugins/impersonate-plugin` in your Kirby project.
+
+Use one installed copy of the plugin per project and follow the setup below after installation.
 
 ## Setup
 
