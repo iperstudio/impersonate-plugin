@@ -3,7 +3,7 @@
 ob_start();
 $bootstrap = getenv('KIRBY_BOOTSTRAP') ?: dirname(__DIR__) . '/vendor/autoload.php';
 if (!is_file($bootstrap)) {
-    throw new RuntimeException('Install development dependencies or set KIRBY_BOOTSTRAP to a Kirby 5 Composer autoloader.');
+    throw new RuntimeException('Install development dependencies or set KIRBY_BOOTSTRAP to a Kirby 5 or 6 Composer autoloader.');
 }
 require $bootstrap;
 

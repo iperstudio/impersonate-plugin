@@ -4,7 +4,7 @@ View a Kirby website as another existing account, without logging out of your ad
 
 Use `?as=ACCOUNT_ID` or `?as=user%40example.com`. The selected account is used for the full frontend request: routes, controllers, templates and custom endpoints. Your application's existing permission checks continue to apply.
 
-Requires **Kirby 5 and PHP 8.2+**. Tested with Kirby 5.4.4. No frontend dependencies or asset build step.
+Supports **Kirby 5** (PHP 8.2+) and **Kirby 6** (PHP 8.3+). No frontend dependencies or asset build step.
 
 ## Installation
 
@@ -13,8 +13,10 @@ Requires **Kirby 5 and PHP 8.2+**. Tested with Kirby 5.4.4. No frontend dependen
 From your Kirby project's root, run:
 
 ```sh
-composer require iperstudio/impersonate-plugin
+composer require 'iperstudio/impersonate-plugin:^1.0'
 ```
+
+Run the same command to update an existing `0.1.x` installation to `1.x`.
 
 Allow `getkirby/composer-installer` if Composer prompts you. The installer places the plugin in `site/plugins/impersonate-plugin` by default.
 
@@ -225,11 +227,11 @@ These helpers are available while the wrapped request is rendering. The URL help
 - Responses carrying `as` use `Cache-Control: private, no-store`, `Referrer-Policy: no-referrer` and `X-Robots-Tag: noindex, nofollow`. Configure any CDN or reverse proxy to bypass these requests too. Avoiding email addresses in bookmarked/shared URLs also keeps them out of browser history and request logs; ID selectors work equally well.
 - Direct calls to `$page->render()` outside the wrapped front controller are not automatically impersonated. Custom headless entry points need their own integration and authorization.
 
-## Migrating an Aria-style implementation
+## Migrating an existing impersonation setup
 
 Do not run the old wrapper/browser script and this plugin together. Replace the old front-controller wrapper with `Impersonate::render($kirby)`, use the plugin's head and toolbar snippets, and remove the old preview-specific script from the layout. The `as` URL format remains compatible.
 
-For the previous read-only behavior, configure `readOnly => true` and block GET action routes such as logout. Keep all Aria-specific order ownership checks, Asana authorization and field restrictions in the site; they do not belong in this generic plugin.
+To retain read-only behavior, configure `readOnly => true` and block GET action routes such as logout. Keep application-specific authorization rules in your site code.
 
 ## Development and tests
 
@@ -241,7 +243,7 @@ composer test-js
 
 The PHP suite uses isolated temporary Kirby sites; it does not contact external services or alter a real site's accounts/content. The browser-script tests use Node's built-in test runner (Node 18+), with no npm installation required.
 
-To use an existing local Kirby installation without installing development dependencies:
+To run the integration suite against a specific Kirby 5 or 6 installation, point `KIRBY_BOOTSTRAP` to its Composer autoloader:
 
 ```sh
 KIRBY_BOOTSTRAP=/absolute/path/to/project/vendor/autoload.php php tests/run.php
