@@ -58,7 +58,11 @@ Inside `<head>`, before your application's scripts:
 <?php snippet('impersonate/head') ?>
 ```
 
-The snippet loads the optional default CSS for admins. During impersonation it also loads the browser script synchronously, so it can preserve the target in requests made by later site scripts. Do not defer or asynchronously load this script.
+The snippet adds a stylesheet link when the toolbar is available. The stylesheet ships with the plugin at [`assets/impersonate.css`](assets/impersonate.css). With the default Composer install path, the file is at `site/plugins/impersonate-plugin/assets/impersonate.css`. Kirby serves this asset automatically.
+
+During impersonation the snippet also loads the browser script synchronously so it can preserve `as` in requests made by later site scripts. Keep the snippet before those scripts so the browser loads it in time.
+
+If you omit `impersonate/head`, the toolbar still renders with your site's existing styles and the server still handles URLs that carry `as`. Automatic propagation of `as` to links, forms and browser requests requires the script loaded by this snippet. To provide your own CSS while retaining that behavior, keep the snippet and [disable the default stylesheet](#styling-with-data-attributes).
 
 ### 3. Place the toolbar
 
@@ -176,7 +180,7 @@ The UI contains **no CSS classes**. The default stylesheet uses low-specificity 
 
 Defaults use an unboxed, wrapping flex layout with a 1rem margin on each side. The input is about 20rem wide. The buttons have a black background and keep their text on one line. The read-only explanation is hidden at widths of 1200px or less. The toolbar is hidden when printing.
 
-Example overrides:
+Add overrides like these to the CSS your site already loads on the frontend. With the default stylesheet enabled, these rules customize it and the remaining defaults still apply.
 
 ```css
 [data-impersonate-toolbar] {
@@ -195,7 +199,7 @@ Example overrides:
 }
 ```
 
-Set `styles` to `false` to provide all styling yourself. Keep the head snippet for navigation support. You can override `impersonate/toolbar` in your site's snippets directory; retain `data-impersonate-exit` on the exit link.
+To style the toolbar entirely in your site's CSS, set `'iperstudio.impersonate-plugin.styles' => false` in `site/config/config.php` and keep `impersonate/head` in your layout. You can override `impersonate/toolbar` in your site's snippets directory; retain `data-impersonate-exit` on the exit link.
 
 ## Translations
 
